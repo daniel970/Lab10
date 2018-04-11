@@ -1,0 +1,78 @@
+package edu.handong.csee.java;
+
+import java.util.Scanner;
+
+/*제작자: 김도영 21700082
+ * 자바프로그래밍 02분반
+ * 날짜: 04/10
+ * 설명: 이 프로그램은 salesman의 수, salesdata를 입력받아 결과값을 출력해주는 함수입니다.
+ */
+
+public class salesReport { //salesReport 클래스
+	private double highSales; //double함수 highSales를 생성
+	private double averageSales; //double함수 averageSales를 생성
+	private Salesman[] team; //배열함수 team을 생성
+	
+	public static void main (String[] args) {
+			salesReport analyzer = new salesReport(); //analyzer라는 인스턴스에 salesReport라는 클래스를 인스턴스화
+			
+			analyzer.getData(); //getdata 메소드를 실행
+			analyzer.computeAverage(); //computeAverage 메소드를 실행
+			analyzer.computeHighestSales(); //computeHighestSales 메소드를 실행
+			analyzer.printResults(); //printResult 메소드를 실행
+	} 
+	
+	public void getData() { //getData 메소드
+		System.out.println("enter the number of salesman: ");
+		Scanner input = new Scanner(System.in); //스캐너 input 을 생성
+		
+		int numOfSalesman = input.nextInt(); //numOfSalesman라는 함수에 입력값을 저장
+		
+		team = new Salesman[numOfSalesman]; //team이라는 배열함수의 크기를  입력값만큼 지정
+		
+		for(int i=0; i <team.length; i++) { //team이라는 배열함수의 길이만큼 for구문을 반복
+			System.out.println("enter data for associate number " + (i+1)); //
+			System.out.println("Name? ");input.nextLine();
+			String name = input.nextLine();
+			System.out.print("sales? ");
+			double sales = input.nextDouble();
+			team[i] = new Salesman();
+			team[i].setName(name);
+			team[i].setSales(sales); 
+			
+		}
+	}
+	
+	public void computeAverage() {
+		double sum =0;
+		for(int i=0; i <team.length;i++) {
+			sum = sum + team[i].getSales();
+			
+		}
+		this.averageSales = sum/team.length;
+	}
+	
+	public void computeHighestSales() {
+		double highestSales =0;
+		for(int i=0; i<team.length;i++) {
+			if(highestSales < team[i].getSales())
+				highestSales = team[i].getSales();
+		}
+		this.highSales=highestSales;
+	}
+	
+	public void printResults() {
+		System.out.println("Average: " + averageSales);
+		System.out.println("salesman who has the highest sales: ");
+		
+		for (int i=0;i < team.length; i++) {
+			if(team[i].getSales() == this.highSales) {
+				System.out.println("name: " + team[i].getName());
+				System.out.println("Sales: " + team[i].getSales());
+			}
+		}
+	}
+	
+}
+
+
